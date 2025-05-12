@@ -4,17 +4,37 @@ let list = document.querySelector('.todo__list')
 let element
 let deleteButton;
 let checkbox;
+// let textSpan
 
-
-function createTask(value){
+function createTask(value){ // function that create new element
 
 element = document.createElement('li')
         element.className = 'list__item'
-        deleteButton = document.createElement('button')
+        deleteButton = document.createElement('button') // here we create delete button for element
         deleteButton.className = 'delete'
         deleteButton.textContent = 'Delete'
-        element.textContent = value
-        list.appendChild(element)
+
+
+    let textSpan = document.createElement('span') // this is text element
+        textSpan.textContent = value
+    textSpan.addEventListener('dblclick', () => {
+        let inputSpan = document.createElement('input') // create a new input when we can edit text
+        inputSpan.type = 'text'
+        inputSpan.className = 'input-edit'
+        inputSpan.value = textSpan.innerText; // text will the same how we write in input
+        textSpan.replaceChildren(inputSpan) // this code replace span elem on input elem
+        inputSpan.addEventListener('keydown', (e) => { //this listener follow on pressing on key
+            if(e.key === 'Enter'){
+                textSpan.textContent = inputSpan.value
+
+            }
+        })
+
+    })
+
+
+    element.appendChild(textSpan)
+    list.appendChild(element)
         element.appendChild(deleteButton)
         checkbox = document.createElement('input')
         checkbox.type = 'checkbox'
